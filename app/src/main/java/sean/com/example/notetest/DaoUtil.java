@@ -18,7 +18,7 @@ public class DaoUtil {
     private DaoUtil() {}
 
     //DCL单例模式
-    public DaoUtil getInstance() {
+    public static DaoUtil getInstance() {
         if(instance == null) {
             synchronized (DaoUtil.class) {
                 if(instance == null) {
@@ -33,7 +33,7 @@ public class DaoUtil {
     * 添加记录
     * */
     public void addInfo(String title, String content, String data) {
-        mDao = MyApplication.getInstance().getDao();
+        mDao = MyApplication.getInstance().getDaoSession().getEventsInfoDao();
         EventsInfo info = new EventsInfo();
         info.setTitle(title);
         info.setContent(content);
@@ -45,15 +45,23 @@ public class DaoUtil {
     * 删除记录
     * */
     public void deleteInfo(Long id) {
-        mDao = MyApplication.getInstance().getDao();
+        mDao = MyApplication.getInstance().getDaoSession().getEventsInfoDao();
         mDao.deleteByKey(id);
+    }
+
+    /*
+    * 删除所有记录
+    * */
+    public void deleteAll() {
+        mDao = MyApplication.getInstance().getDaoSession().getEventsInfoDao();
+        mDao.deleteAll();
     }
 
     /*
     * 修改记录
     * */
     public void updateInfo(String title, String content, Long id) {
-        mDao = MyApplication.getInstance().getDao();
+        mDao = MyApplication.getInstance().getDaoSession().getEventsInfoDao();
         EventsInfo info = new EventsInfo();
         info.setId(id);
         info.setTitle(title);
@@ -65,7 +73,7 @@ public class DaoUtil {
     * 查询记录
     * */
     public List<EventsInfo> queryInfo() {
-        mDao = MyApplication.getInstance().getDao();
+        mDao = MyApplication.getInstance().getDaoSession().getEventsInfoDao();
         List<EventsInfo> infoList = mDao.loadAll();
         return infoList;
     }
