@@ -20,7 +20,7 @@ android {
 }
 
 greendao {
-    schemaVersion 3  //数据库版本号
+    schemaVersion 5  //数据库版本号
     daoPackage 'sean.com.example.notetest.db'
     targetGenDir 'src/main/java'
 }

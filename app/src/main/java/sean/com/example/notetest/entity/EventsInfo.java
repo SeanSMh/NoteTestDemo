@@ -16,16 +16,31 @@ public class EventsInfo {
     private String title;   //标题
     private String content;  //内容
     private String data;   //时间
-    @Generated(hash = 2084793639)
-    public EventsInfo(Long id, String title, String content, String data) {
+
+    private long day;
+    private long hour;
+    private long minute;
+    private long second;
+    private long diff;
+
+    @Generated(hash = 1077223726)
+    public EventsInfo(Long id, String title, String content, String data, long day,
+            long hour, long minute, long second, long diff) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.data = data;
+        this.day = day;
+        this.hour = hour;
+        this.minute = minute;
+        this.second = second;
+        this.diff = diff;
     }
+
     @Generated(hash = 1146244956)
     public EventsInfo() {
     }
+
     public Long getId() {
         return this.id;
     }
@@ -50,5 +65,39 @@ public class EventsInfo {
     public void setData(String data) {
         this.data = data;
     }
+    public long getDay() {
+        return this.day;
+    }
+    public void setDay(long day) {
+        this.day = day;
+    }
+    public long getHour() {
+        return this.hour;
+    }
+    public void setHour(long hour) {
+        this.hour = hour;
+    }
+    public long getMinute() {
+        return this.minute;
+    }
+    public void setMinute(long minute) {
+        this.minute = minute;
+    }
+    public long getSecond() {
+        return this.second;
+    }
+    public void setSecond(long second) {
+        this.second = second;
+    }
+
+    public long getDiff() {
+        return this.diff;
+    }
+
+    public void setDiff(long diff) {
+        this.diff = diff;
+    }
+
+
     
 }

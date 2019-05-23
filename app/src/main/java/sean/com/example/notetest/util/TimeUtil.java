@@ -1,7 +1,6 @@
-package sean.com.example.notetest;
+package sean.com.example.notetest.util;
 
 import android.util.Log;
-import android.widget.TimePicker;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -31,10 +30,10 @@ public class TimeUtil {
     public long compute(String end) {
         long diff = 0;
         try {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
             //获取当前时间
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = new Date(System.currentTimeMillis());
             String now = simpleDateFormat.format(date);
 
@@ -46,7 +45,7 @@ public class TimeUtil {
             long hours =  diff / (1000 * 60 * 60 );
             long minutes = diff / (1000*60);*/
 
-            //Log.d("TAG剩余时间----->", diff + ":" + days + ":" + hours + ":" + minutes + "");
+            Log.d("TAG剩余时间----->",  ":" + diff);
         } catch (Exception e) {
             Log.d("TAG----->", e.toString());
         }

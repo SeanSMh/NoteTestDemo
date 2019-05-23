@@ -6,6 +6,7 @@
 
     <DatePicker
         android:id="@+id/datapicker"
+        android:datePickerMode="spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:calendarViewShown="false"
@@ -13,6 +14,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent">
     </DatePicker>
+    <TimePicker
+        android:id="@+id/timepicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner"
+        app:layout_constraintTop_toBottomOf="@+id/datapicker"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        >
+    </TimePicker>
 
     <Button
         android:id="@+id/btncancel"
@@ -24,7 +35,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/button_shape"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/datapicker"
+        app:layout_constraintTop_toBottomOf="@+id/timepicker"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
@@ -35,7 +46,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/button_shape"
-        app:layout_constraintTop_toBottomOf="@+id/datapicker"
+        app:layout_constraintTop_toBottomOf="@+id/timepicker"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
     

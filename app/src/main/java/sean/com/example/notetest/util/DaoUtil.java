@@ -1,7 +1,8 @@
-package sean.com.example.notetest;
+package sean.com.example.notetest.util;
 
 import java.util.List;
 
+import sean.com.example.notetest.MyApplication;
 import sean.com.example.notetest.db.EventsInfoDao;
 import sean.com.example.notetest.entity.EventsInfo;
 
@@ -49,6 +50,8 @@ public class DaoUtil {
         mDao.deleteByKey(id);
     }
 
+
+
     /*
     * 删除所有记录
     * */
@@ -60,12 +63,14 @@ public class DaoUtil {
     /*
     * 修改记录
     * */
-    public void updateInfo(String title, String content, Long id) {
+    public void updateInfo(String title, String content, String data, int id) {
         mDao = MyApplication.getInstance().getDaoSession().getEventsInfoDao();
-        EventsInfo info = new EventsInfo();
-        info.setId(id);
+        List<EventsInfo> list = mDao.loadAll();
+
+        EventsInfo info = list.get(id);
         info.setTitle(title);
         info.setContent(content);
+        info.setData(data);
         mDao.update(info);
     }
 

@@ -28,6 +28,11 @@ public class EventsInfoDao extends AbstractDao<EventsInfo, Long> {
         public final static Property Title = new Property(1, String.class, "title", false, "TITLE");
         public final static Property Content = new Property(2, String.class, "content", false, "CONTENT");
         public final static Property Data = new Property(3, String.class, "data", false, "DATA");
+        public final static Property Day = new Property(4, long.class, "day", false, "DAY");
+        public final static Property Hour = new Property(5, long.class, "hour", false, "HOUR");
+        public final static Property Minute = new Property(6, long.class, "minute", false, "MINUTE");
+        public final static Property Second = new Property(7, long.class, "second", false, "SECOND");
+        public final static Property Diff = new Property(8, long.class, "diff", false, "DIFF");
     }
 
 
@@ -46,7 +51,12 @@ public class EventsInfoDao extends AbstractDao<EventsInfo, Long> {
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"TITLE\" TEXT," + // 1: title
                 "\"CONTENT\" TEXT," + // 2: content
-                "\"DATA\" TEXT);"); // 3: data
+                "\"DATA\" TEXT," + // 3: data
+                "\"DAY\" INTEGER NOT NULL ," + // 4: day
+                "\"HOUR\" INTEGER NOT NULL ," + // 5: hour
+                "\"MINUTE\" INTEGER NOT NULL ," + // 6: minute
+                "\"SECOND\" INTEGER NOT NULL ," + // 7: second
+                "\"DIFF\" INTEGER NOT NULL );"); // 8: diff
     }
 
     /** Drops the underlying database table. */
@@ -78,6 +88,11 @@ public class EventsInfoDao extends AbstractDao<EventsInfo, Long> {
         if (data != null) {
             stmt.bindString(4, data);
         }
+        stmt.bindLong(5, entity.getDay());
+        stmt.bindLong(6, entity.getHour());
+        stmt.bindLong(7, entity.getMinute());
+        stmt.bindLong(8, entity.getSecond());
+        stmt.bindLong(9, entity.getDiff());
     }
 
     @Override
@@ -103,6 +118,11 @@ public class EventsInfoDao extends AbstractDao<EventsInfo, Long> {
         if (data != null) {
             stmt.bindString(4, data);
         }
+        stmt.bindLong(5, entity.getDay());
+        stmt.bindLong(6, entity.getHour());
+        stmt.bindLong(7, entity.getMinute());
+        stmt.bindLong(8, entity.getSecond());
+        stmt.bindLong(9, entity.getDiff());
     }
 
     @Override
@@ -116,7 +136,12 @@ public class EventsInfoDao extends AbstractDao<EventsInfo, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // title
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // content
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // data
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // data
+            cursor.getLong(offset + 4), // day
+            cursor.getLong(offset + 5), // hour
+            cursor.getLong(offset + 6), // minute
+            cursor.getLong(offset + 7), // second
+            cursor.getLong(offset + 8) // diff
         );
         return entity;
     }
@@ -127,6 +152,11 @@ public class EventsInfoDao extends AbstractDao<EventsInfo, Long> {
         entity.setTitle(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setContent(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setData(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setDay(cursor.getLong(offset + 4));
+        entity.setHour(cursor.getLong(offset + 5));
+        entity.setMinute(cursor.getLong(offset + 6));
+        entity.setSecond(cursor.getLong(offset + 7));
+        entity.setDiff(cursor.getLong(offset + 8));
      }
     
     @Override
