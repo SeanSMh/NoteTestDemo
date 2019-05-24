@@ -15,6 +15,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +29,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import sean.com.example.notetest.R;
+import sean.com.example.notetest.entity.ColorEvent;
 import sean.com.example.notetest.entity.EventsInfo;
 import sean.com.example.notetest.util.DaoUtil;
 import sean.com.example.notetest.util.TimeUtil;
@@ -40,18 +45,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Disposable mDisposable;
     private VibratorFragment mFragment;
     private IfDeleteAllFragment mIfDeleteAllFragment;
+    private int backgroundColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        EventBus.getDefault().register(this);
         Log.d("TAG----->", "oncreate");
 
         //设置与状态栏融合
         if (Build.VERSION.SDK_INT >= 21) {
             View decorView = getWindow().getDecorView();
             decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         //加载主布局
@@ -65,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         deleteAll = findViewById(R.id.deleteAll);
         addInfo = findViewById(R.id.float_addInfo);
         mainTitle = findViewById(R.id.maintitle);
+        mRecyclerView = findViewById(R.id.things);
 
         //初始的时候，要添加数据库查询功能，把所有未过期的事件查询并显示出来
         initList();
@@ -90,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void initRecyclerView() {
-        mRecyclerView = findViewById(R.id.things);
         mRecyclerviewAdapter = new RecyclerviewAdapter(this, list);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
@@ -255,13 +261,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onRestart() {
         Log.d("TAGmain----->", "onRestart");
+        //initList();
+        Log.d("TAG-----", "a");
+        //mRecyclerviewAdapter.notifyDataSetChanged();
+        super.onRestart();
+    }
+
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void acceptColor(ColorEvent event) {
+        Log.d("TAGcolor----->", event.getColor() + "");
+        Log.d("TAG-----", "b");
+        if(event.getColor() == 2) {
+            backgroundColor = R.color.colorGreen;
+            mRecyclerviewAdapter.setColor(backgroundColor);
+        }
         initList();
         mRecyclerviewAdapter.notifyDataSetChanged();
-        super.onRestart();
     }
 
     @Override
     public void onDestroy() {
+        EventBus.getDefault().unregister(this);
         mDisposable.dispose();
         super.onDestroy();
     }

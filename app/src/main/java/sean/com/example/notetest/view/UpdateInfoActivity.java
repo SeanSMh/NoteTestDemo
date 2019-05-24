@@ -2,6 +2,8 @@ package sean.com.example.notetest.view;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -36,6 +38,15 @@ public class UpdateInfoActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //设置与状态栏融合
+        if (Build.VERSION.SDK_INT >= 21) {
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+
         setContentView(R.layout.activity_update_info);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

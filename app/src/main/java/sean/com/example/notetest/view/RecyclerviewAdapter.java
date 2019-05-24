@@ -1,10 +1,8 @@
 package sean.com.example.notetest.view;
 
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +24,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
 
     private List<EventsInfo> mInfoList;
     private Context mContext;
+    private int backgroundColor;
 
     //构造函数
     public RecyclerviewAdapter(Context mContext, List<EventsInfo> list) {
@@ -40,6 +39,8 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(
                 R.layout.recyclerview_item, viewGroup, false);
         final ViewHolder holder = new ViewHolder(view);
+        view.setBackgroundColor(backgroundColor);
+
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +110,10 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
             lastData = (ConstraintLayout) itemView.findViewById(R.id.lastData);
             warning = (TextView) itemView.findViewById(R.id.warning);
         }
-
     }
+
+    public void setColor(int color){
+        this.backgroundColor = color;
+    }
+
 }

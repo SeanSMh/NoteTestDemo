@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="sean.com.example.notetest">
 
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".MyApplication"
@@ -22,7 +22,12 @@
         <activity
             android:name=".view.AddInfoActivity"
             android:label="新建事项" />
-        <activity android:name=".view.UpdateInfoActivity"></activity>
+        <activity android:name=".view.UpdateInfoActivity" />
+
+        <service
+            android:name=".view.VibratorService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

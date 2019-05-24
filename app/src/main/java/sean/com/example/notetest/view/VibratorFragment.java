@@ -1,6 +1,7 @@
 package sean.com.example.notetest.view;
 
 import android.app.Service;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -27,8 +28,8 @@ import sean.com.example.notetest.R;
 public class VibratorFragment extends DialogFragment {
 
     private TextView mContent;
-    private Vibrator mVibrator;  //振动
     private ImageView cancelShake;
+    private Intent mStartIntent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,13 +45,14 @@ public class VibratorFragment extends DialogFragment {
         getDialog().setCancelable(false);
         getDialog().setCanceledOnTouchOutside(false);
 
-        mVibrator = (Vibrator) getActivity().getApplication().getSystemService(Service.VIBRATOR_SERVICE);
-        //持续振动
-        mVibrator.vibrate(new long[] {1000, 800, 1000, 800}, 0);
+        //启动振动
+        mStartIntent = new Intent(getActivity(), VibratorService.class);
+        getActivity().startService(mStartIntent);
 
         mContent = view.findViewById(R.id.fragment_content);
         cancelShake = view.findViewById(R.id.cancelshake);
 
+        //mStopIntent = new Intent(getActivity(), VibratorService.class);
         Animation shake = AnimationUtils.loadAnimation(getActivity().getApplication(),
                 R.anim.shake);
         cancelShake.startAnimation(shake);
@@ -58,7 +60,9 @@ public class VibratorFragment extends DialogFragment {
         cancelShake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mVibrator.cancel();
+                //mVibrator.cancel();
+                //停止振动
+                getActivity().stopService(mStartIntent);
                 dismiss();
             }
         });
@@ -80,5 +84,10 @@ public class VibratorFragment extends DialogFragment {
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         win.setAttributes(params);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

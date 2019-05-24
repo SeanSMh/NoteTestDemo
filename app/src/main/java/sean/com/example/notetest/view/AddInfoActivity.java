@@ -1,8 +1,13 @@
 package sean.com.example.notetest.view;
 
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,9 +21,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import sean.com.example.notetest.R;
+import sean.com.example.notetest.entity.BackgroundBean;
+import sean.com.example.notetest.entity.ColorEvent;
 import sean.com.example.notetest.util.DaoUtil;
 
 
@@ -29,7 +40,7 @@ public class AddInfoActivity extends AppCompatActivity implements View.OnClickLi
 
     private EditText title, content;
     private TextView time;
-    private int mYear, mMonth, mDay;
+    private int mYear, mMonth, mDay, backgroundColor;
     private long hour, minute;
 
     private String realMinute = null;
@@ -37,9 +48,22 @@ public class AddInfoActivity extends AppCompatActivity implements View.OnClickLi
     private String realMonth = null;
     private String realDay = null;
 
+    private BackgroundRecyclerViewAdapter mAdapter;
+    private RecyclerView background_recy;
+    private List<BackgroundBean> backgrounds = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //设置与状态栏融合
+        if (Build.VERSION.SDK_INT >= 21) {
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+
         setContentView(R.layout.activity_add_info);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -56,6 +80,9 @@ public class AddInfoActivity extends AppCompatActivity implements View.OnClickLi
         content = findViewById(R.id.content);
         time = findViewById(R.id.time);
         time.setOnClickListener(this);
+
+        initList();
+        initRecyclerview();
     }
 
     @Override
@@ -76,6 +103,8 @@ public class AddInfoActivity extends AppCompatActivity implements View.OnClickLi
                     Toast.makeText(this, "标题不能为空", Toast.LENGTH_SHORT).show();
                 } else {
                     DaoUtil.getInstance().addInfo(strTitle, strContent, strTime);
+                    //使用EventBus传递数值
+                    EventBus.getDefault().post(new ColorEvent(backgroundColor));
                     finish();
                 }
                 break;
@@ -83,6 +112,29 @@ public class AddInfoActivity extends AppCompatActivity implements View.OnClickLi
                 break;
         }
         return true;
+    }
+
+    public void initList() {
+        backgrounds.add(new BackgroundBean(getResources().getColor(R.color.colorOrange)));
+        backgrounds.add(new BackgroundBean(getResources().getColor(R.color.colorBlue)));
+        backgrounds.add(new BackgroundBean(getResources().getColor(R.color.colorYellow)));
+    }
+
+    public void initRecyclerview() {
+        background_recy = findViewById(R.id.background_recycler);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mAdapter = new BackgroundRecyclerViewAdapter(this, backgrounds);
+        background_recy.setLayoutManager(manager);
+        background_recy.setAdapter(mAdapter);
+
+        mAdapter.setSendColorListener(new BackgroundRecyclerViewAdapter.SendColorListener() {
+            @Override
+            public void sendColor(int colorId) {
+                backgroundColor = colorId;
+                Log.d("TAGcolor----->", "被选中的颜色" + colorId);
+            }
+        });
     }
 
     //点击事件，弹出事件选择器
