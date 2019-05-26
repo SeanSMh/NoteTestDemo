@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,11 +11,11 @@
         android:id="@+id/maintitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
         android:text="这是你的待办事项"
         android:textColor="#000000"
         android:textSize="20sp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,125 +23,120 @@
         android:id="@+id/deleteAll"
         android:layout_width="50dp"
         android:layout_height="30dp"
-        android:text="删除"
-        android:background="@drawable/button_shape"
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:background="@drawable/button_shape"
+        android:text="删除"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/last_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/deleteAll">
 
         <TextView
             android:id="@+id/top_last_time"
-            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2019年剩余"
             android:textColor="@color/colorBlack"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/top_last_day"
-            android:textSize="16sp"
-            android:textColor="@color/colorGreen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorGreen"
+            android:textSize="16sp"
             app:layout_constraintLeft_toRightOf="@id/top_last_time"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/top_last_realday"
-            android:text="天"
-            android:textSize="16sp"
-            android:textColor="@color/colorBlack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/top_last_day"/>
+            android:text="天"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@+id/top_last_day"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/top_last_hour"
-            android:textSize="16sp"
-            android:textColor="@color/colorGreen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorGreen"
+            android:textSize="16sp"
             app:layout_constraintLeft_toRightOf="@id/top_last_realday"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/top_last_realhour"
-            android:text="小时"
-            android:textSize="16sp"
-            android:textColor="@color/colorBlack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/top_last_hour"/>
+            android:text="小时"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@+id/top_last_hour"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/top_last_minute"
-            android:textSize="16sp"
-            android:textColor="@color/colorGreen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorGreen"
+            android:textSize="16sp"
             app:layout_constraintLeft_toRightOf="@id/top_last_realhour"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/top_last_realminute"
-            android:text="分钟"
-            android:textSize="16sp"
-            android:textColor="@color/colorBlack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/top_last_minute"/>
+            android:text="分钟"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@+id/top_last_minute"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/top_last_second"
-            android:textSize="16sp"
-            android:textColor="@color/colorGreen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorGreen"
+            android:textSize="16sp"
             app:layout_constraintLeft_toRightOf="@id/top_last_realminute"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/top_last_realsecond"
-            android:text="秒"
-            android:textSize="16sp"
-            android:textColor="@color/colorBlack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/top_last_second"/>
+            android:text="秒"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@+id/top_last_second"
+            app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/things"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginRight="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/last_time">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/things"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </android.support.v7.widget.RecyclerView>
-    </android.support.v4.widget.NestedScrollView>
+    </android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/float_addInfo"
@@ -151,7 +145,7 @@
         android:layout_margin="16dp"
         android:elevation="8dp"
         android:src="@drawable/floatbtn"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

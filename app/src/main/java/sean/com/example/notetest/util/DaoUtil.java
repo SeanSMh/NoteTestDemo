@@ -33,12 +33,13 @@ public class DaoUtil {
     /*
     * 添加记录
     * */
-    public void addInfo(String title, String content, String data) {
+    public void addInfo(String title, String content, String data, int color) {
         mDao = MyApplication.getInstance().getDaoSession().getEventsInfoDao();
         EventsInfo info = new EventsInfo();
         info.setTitle(title);
         info.setContent(content);
         info.setData(data);
+        info.setBackgroundColor(color);
         mDao.insertOrReplace(info);
     }
 

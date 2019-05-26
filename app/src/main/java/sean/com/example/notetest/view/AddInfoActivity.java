@@ -1,7 +1,6 @@
 package sean.com.example.notetest.view;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -102,9 +101,7 @@ public class AddInfoActivity extends AppCompatActivity implements View.OnClickLi
                 if (TextUtils.isEmpty(strTitle)) {
                     Toast.makeText(this, "标题不能为空", Toast.LENGTH_SHORT).show();
                 } else {
-                    DaoUtil.getInstance().addInfo(strTitle, strContent, strTime);
-                    //使用EventBus传递数值
-                    EventBus.getDefault().post(new ColorEvent(backgroundColor));
+                    DaoUtil.getInstance().addInfo(strTitle, strContent, strTime, backgroundColor);
                     finish();
                 }
                 break;

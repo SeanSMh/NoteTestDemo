@@ -1,10 +1,12 @@
 package sean.com.example.notetest.view;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,10 +16,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +34,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import sean.com.example.notetest.R;
-import sean.com.example.notetest.entity.ColorEvent;
 import sean.com.example.notetest.entity.EventsInfo;
 import sean.com.example.notetest.util.DaoUtil;
 import sean.com.example.notetest.util.TimeUtil;
@@ -45,12 +49,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Disposable mDisposable;
     private VibratorFragment mFragment;
     private IfDeleteAllFragment mIfDeleteAllFragment;
-    private int backgroundColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
         Log.d("TAG----->", "oncreate");
 
         //设置与状态栏融合
@@ -84,6 +86,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         addInfo.setOnClickListener(this);
         deleteAll.setOnClickListener(this);
 
+        //申请权限
+        if(Build.VERSION.SDK_INT>=23){
+            String[] mPermissionList = new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.CALL_PHONE,
+                    Manifest.permission.READ_LOGS,
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.SET_DEBUG_APP,
+                    Manifest.permission.SYSTEM_ALERT_WINDOW,
+                    Manifest.permission.GET_ACCOUNTS,
+                    Manifest.permission.WRITE_APN_SETTINGS};
+            ActivityCompat.requestPermissions(this,mPermissionList,123);
+        }
+
     }
 
     public void initList() {
@@ -101,7 +119,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mRecyclerviewAdapter);
-
 
         //处理RecyclerView的侧滑删除
         ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
@@ -127,10 +144,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         helper.attachToRecyclerView(mRecyclerView);
+
+        mRecyclerviewAdapter.setShareListener(new RecyclerviewAdapter.ShareListener() {
+            @Override
+            public void showShare() {
+                UMImage image = new UMImage(MainActivity.this, R.drawable.timeicon);
+                new ShareAction(MainActivity.this).withText("hello")
+                        .withMedia(image)
+                        .setDisplayList(SHARE_MEDIA.SINA,SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN)
+                        .setCallback(umShareListener)
+                        .open();
+            }
+        });
         //计算剩余时间
         computeTime();
     }
 
+    //点击事件
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -163,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return mList;
     }
 
+    //主页计算离2020还有多长时间
     public void computeTime() {
 
         Observable.interval(1, TimeUnit.SECONDS)
@@ -211,12 +242,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
     }
 
+    //开启另外一个DialogFragment振动
     public void phoneVibrator() {
-        //开启另外一个DialogFragment振动
         mFragment = new VibratorFragment();
         mFragment.show(getSupportFragmentManager(), "dialog");
     }
 
+    //计算单个事项剩余时间
     public void initLastTime() {
         Observable.interval(1, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
@@ -261,27 +293,68 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onRestart() {
         Log.d("TAGmain----->", "onRestart");
-        //initList();
+        initList();
         Log.d("TAG-----", "a");
-        //mRecyclerviewAdapter.notifyDataSetChanged();
+        mRecyclerviewAdapter.notifyDataSetChanged();
         super.onRestart();
     }
 
-    @Subscribe (threadMode = ThreadMode.MAIN)
-    public void acceptColor(ColorEvent event) {
-        Log.d("TAGcolor----->", event.getColor() + "");
-        Log.d("TAG-----", "b");
-        if(event.getColor() == 2) {
-            backgroundColor = R.color.colorGreen;
-            mRecyclerviewAdapter.setColor(backgroundColor);
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+    }
+
+    //分享接口回调
+    private UMShareListener umShareListener = new UMShareListener() {
+        /**
+         * @descrption 分享开始的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+            Log.d("TAG分享回调----->", "onStart");
         }
-        initList();
-        mRecyclerviewAdapter.notifyDataSetChanged();
+
+        /**
+         * @descrption 分享成功的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Toast.makeText(MainActivity.this,"成功了",Toast.LENGTH_LONG).show();
+            Log.d("TAG分享回调----->", "onResult");
+        }
+
+        /**
+         * @descrption 分享失败的回调
+         * @param platform 平台类型
+         * @param t 错误原因
+         */
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(MainActivity.this,"失败"+t.getMessage(),Toast.LENGTH_LONG).show();
+            Log.d("TAG分享回调-----", t.getMessage());
+        }
+
+        /**
+         * @descrption 分享取消的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(MainActivity.this,"取消了",Toast.LENGTH_LONG).show();
+
+        }
+    };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void onDestroy() {
-        EventBus.getDefault().unregister(this);
         mDisposable.dispose();
         super.onDestroy();
     }

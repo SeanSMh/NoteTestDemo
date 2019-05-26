@@ -23,9 +23,12 @@ public class EventsInfo {
     private long second;
     private long diff;
 
-    @Generated(hash = 1077223726)
+    private int backgroundColor;
+
+
+    @Generated(hash = 1168781775)
     public EventsInfo(Long id, String title, String content, String data, long day,
-            long hour, long minute, long second, long diff) {
+            long hour, long minute, long second, long diff, int backgroundColor) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -35,11 +38,12 @@ public class EventsInfo {
         this.minute = minute;
         this.second = second;
         this.diff = diff;
+        this.backgroundColor = backgroundColor;
     }
-
     @Generated(hash = 1146244956)
     public EventsInfo() {
     }
+
 
     public Long getId() {
         return this.id;
@@ -97,7 +101,11 @@ public class EventsInfo {
     public void setDiff(long diff) {
         this.diff = diff;
     }
+    public int getBackgroundColor() {
+        return this.backgroundColor;
+    }
+    public void setBackgroundColor(int backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
 
-
-    
 }

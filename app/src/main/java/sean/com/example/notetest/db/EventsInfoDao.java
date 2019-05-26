@@ -33,6 +33,7 @@ public class EventsInfoDao extends AbstractDao<EventsInfo, Long> {
         public final static Property Minute = new Property(6, long.class, "minute", false, "MINUTE");
         public final static Property Second = new Property(7, long.class, "second", false, "SECOND");
         public final static Property Diff = new Property(8, long.class, "diff", false, "DIFF");
+        public final static Property BackgroundColor = new Property(9, int.class, "backgroundColor", false, "BACKGROUND_COLOR");
     }
 
 
@@ -56,7 +57,8 @@ public class EventsInfoDao extends AbstractDao<EventsInfo, Long> {
                 "\"HOUR\" INTEGER NOT NULL ," + // 5: hour
                 "\"MINUTE\" INTEGER NOT NULL ," + // 6: minute
                 "\"SECOND\" INTEGER NOT NULL ," + // 7: second
-                "\"DIFF\" INTEGER NOT NULL );"); // 8: diff
+                "\"DIFF\" INTEGER NOT NULL ," + // 8: diff
+                "\"BACKGROUND_COLOR\" INTEGER NOT NULL );"); // 9: backgroundColor
     }
 
     /** Drops the underlying database table. */
@@ -93,6 +95,7 @@ public class EventsInfoDao extends AbstractDao<EventsInfo, Long> {
         stmt.bindLong(7, entity.getMinute());
         stmt.bindLong(8, entity.getSecond());
         stmt.bindLong(9, entity.getDiff());
+        stmt.bindLong(10, entity.getBackgroundColor());
     }
 
     @Override
@@ -123,6 +126,7 @@ public class EventsInfoDao extends AbstractDao<EventsInfo, Long> {
         stmt.bindLong(7, entity.getMinute());
         stmt.bindLong(8, entity.getSecond());
         stmt.bindLong(9, entity.getDiff());
+        stmt.bindLong(10, entity.getBackgroundColor());
     }
 
     @Override
@@ -141,7 +145,8 @@ public class EventsInfoDao extends AbstractDao<EventsInfo, Long> {
             cursor.getLong(offset + 5), // hour
             cursor.getLong(offset + 6), // minute
             cursor.getLong(offset + 7), // second
-            cursor.getLong(offset + 8) // diff
+            cursor.getLong(offset + 8), // diff
+            cursor.getInt(offset + 9) // backgroundColor
         );
         return entity;
     }
@@ -157,6 +162,7 @@ public class EventsInfoDao extends AbstractDao<EventsInfo, Long> {
         entity.setMinute(cursor.getLong(offset + 6));
         entity.setSecond(cursor.getLong(offset + 7));
         entity.setDiff(cursor.getLong(offset + 8));
+        entity.setBackgroundColor(cursor.getInt(offset + 9));
      }
     
     @Override
