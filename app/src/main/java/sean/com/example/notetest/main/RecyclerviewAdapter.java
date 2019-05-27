@@ -1,8 +1,8 @@
-package sean.com.example.notetest.view;
+package sean.com.example.notetest.main;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Camera;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,13 +17,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.umeng.socialize.ShareAction;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-
 import java.util.List;
 
 import sean.com.example.notetest.R;
 import sean.com.example.notetest.entity.EventsInfo;
+import sean.com.example.notetest.updateItem.UpdateInfoActivity;
+import sean.com.example.notetest.view.MyAnimation;
 
 /**
  * @author Sean

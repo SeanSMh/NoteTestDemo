@@ -1,4 +1,4 @@
-package sean.com.example.notetest.view;
+package sean.com.example.notetest.main;
 
 import android.Manifest;
 import android.content.Intent;
@@ -37,6 +37,10 @@ import sean.com.example.notetest.R;
 import sean.com.example.notetest.entity.EventsInfo;
 import sean.com.example.notetest.util.DaoUtil;
 import sean.com.example.notetest.util.TimeUtil;
+import sean.com.example.notetest.addItem.AddInfoActivity;
+import sean.com.example.notetest.view.IfDeleteAllFragment;
+import sean.com.example.notetest.view.MyAnimation;
+import sean.com.example.notetest.view.VibratorFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -193,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return mList;
     }
 
-    //主页计算离2020还有多长时间
+    //计算单个事项剩余时间
     public void computeTime() {
 
         Observable.interval(1, TimeUnit.SECONDS)
@@ -248,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFragment.show(getSupportFragmentManager(), "dialog");
     }
 
-    //计算单个事项剩余时间
+    //主页计算离2020还有多长时间
     public void initLastTime() {
         Observable.interval(1, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
@@ -274,6 +278,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             hour.setText(String.valueOf(hours));
                             minute.setText(String.valueOf(minutes));
                             second.setText(String.valueOf(seconds));
+                            MyAnimation myAnimation = new MyAnimation();
+                            second.setAnimation(myAnimation);
                         }
                     }
 

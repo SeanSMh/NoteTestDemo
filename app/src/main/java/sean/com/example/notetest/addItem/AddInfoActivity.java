@@ -1,4 +1,4 @@
-package sean.com.example.notetest.view;
+package sean.com.example.notetest.addItem;
 
 import android.app.AlertDialog;
 import android.graphics.Color;
@@ -20,15 +20,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import sean.com.example.notetest.R;
 import sean.com.example.notetest.entity.BackgroundBean;
-import sean.com.example.notetest.entity.ColorEvent;
 import sean.com.example.notetest.util.DaoUtil;
 
 

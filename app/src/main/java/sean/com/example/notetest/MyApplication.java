@@ -27,16 +27,17 @@ public class MyApplication extends Application {
         initCreenDao();  //初始化GreenDao
         instance = this;
 
+        UMConfigure.setLogEnabled(true);
         UMConfigure.init(this,"5cea53620cafb2d7570000b5"
                 ,"umeng",UMConfigure.DEVICE_TYPE_PHONE,"");//58edcfeb310c93091c000be2 5965ee00734be40b580001a0
-        UMConfigure.setLogEnabled(true);
+
 
         //微信开放平台申请下离的应用id和md5签名工具生成的md5值
         PlatformConfig.setWeixin("wx9b5134440f179efd", "4efdff8ea6cd8070682a3866c0f444ae");
         //从腾讯开放平台获取你申请的qq分享相关的appid和screct值
         PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
         //从微博开放平台获取你的appkey和screct值
-        PlatformConfig.setSinaWeibo("1844955595", "2119f6551d01695b6555555693d575", "http://sns.whalecloud.com");
+        PlatformConfig.setSinaWeibo("2770004675", "89339de3e4da893aa40412e0128a5f33", "https://api.weibo.com/oauth2/default.html");
 
     }
 

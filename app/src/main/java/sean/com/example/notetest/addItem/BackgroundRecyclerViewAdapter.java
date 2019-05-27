@@ -1,4 +1,4 @@
-package sean.com.example.notetest.view;
+package sean.com.example.notetest.addItem;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CheckedTextView;
 import android.widget.ImageView;
 
 import java.util.List;
