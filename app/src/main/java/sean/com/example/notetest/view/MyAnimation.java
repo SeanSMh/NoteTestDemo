@@ -25,10 +25,10 @@ public class MyAnimation extends Animation {
     public void initialize(int width, int height, int parentWidth, int parentHeight) {
         super.initialize(width, height, parentWidth, parentHeight);
         //获得中心点坐标
-        centerX = width / 2;
-        centerY = width / 2;
+        centerX = width;
+        centerY = height;
         //动画执行时间 自行定义
-        setDuration(1000);
+        setDuration(3*1000);
         setInterpolator(new DecelerateInterpolator());
     }
 
@@ -42,13 +42,16 @@ public class MyAnimation extends Animation {
         final Matrix matrix = t.getMatrix();
         camera.save();
         //中心是Y轴旋转，这里可以自行设置X轴 Y轴 Z轴
-        camera.rotateX(360 * interpolatedTime);
+        camera.rotateX(-180 * interpolatedTime);
         //把我们的摄像头加在变换矩阵上
         camera.getMatrix(matrix);
-        //设置翻转中心点
-        matrix.preTranslate(centerX, centerY);
-        matrix.postTranslate(-centerX,-centerY);
+        //这是翻转效果，设置翻转中心点
+        matrix.preTranslate(-centerX, -centerY);  //将图片上移到x轴为底
+        matrix.postTranslate(centerX, centerY);   //将图片复位，加上角度，看起来就像翻转
+
         camera.restore();
     }
+
+
 
 }
